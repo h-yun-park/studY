@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>studY — IID Study Groups · Yonsei</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:wght@400;500&display=swap');
+:root{
+  --black:#0A0A0A;--white:#FFFFFF;--canvas:#FFFFFF;--ink:#0A0A0A;
+  --surface-soft:#F5F5F3;--hairline:#E0DFDB;--hairline-soft:#EBEBEA;
+  --block-lime:#D4F5A0;--block-lilac:#DDD5F5;--block-cream:#F5EED4;
+  --block-mint:#BFEDE0;--block-coral:#F5C4AD;--block-navy:#1A1F3C;
+  --royal-blue:#4169E1;--royal-blue-dark:#2a4bbf;--inverse-ink:#FFFFFF;
+  --pill:50px;--section:96px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--canvas);color:var(--ink);font-size:18px;font-weight:400;line-height:1.45;letter-spacing:-0.26px;-webkit-font-smoothing:antialiased}
+
+/* ── PAGE VIEWS ── */
+.page{display:none}.page.active{display:block}
+
+/* ── NAV ── */
+nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;border-bottom:1px solid var(--hairline)}
+.nav-logo{font-size:22px;font-weight:700;color:var(--ink);text-decoration:none;letter-spacing:-0.3px;cursor:pointer}
+.nav-logo .Y{color:var(--royal-blue)}
+.nav-links{display:flex;align-items:center;gap:24px}
+.nav-link{font-size:15px;font-weight:400;color:var(--ink);text-decoration:none;letter-spacing:-0.1px;transition:opacity .15s;cursor:pointer;border:none;background:none}
+.nav-link:hover{opacity:.5}
+.nav-ctas{display:flex;align-items:center;gap:10px}
+.btn-royal{background:var(--royal-blue);color:var(--white);font-size:15px;font-weight:600;padding:9px 22px;border-radius:var(--pill);border:none;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:background .15s;white-space:nowrap;letter-spacing:-0.1px}
+.btn-royal:hover{background:var(--royal-blue-dark)}
+.btn-secondary{background:transparent;color:var(--ink);font-size:15px;font-weight:500;padding:8px 18px;border-radius:var(--pill);border:1px solid var(--hairline);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;transition:border-color .15s;white-space:nowrap;letter-spacing:-0.1px}
+.btn-secondary:hover{border-color:var(--ink)}
+.btn-ghost{font-size:14px;font-weight:500;color:var(--ink);background:none;border:none;cursor:pointer;opacity:.45;letter-spacing:-0.1px;transition:opacity .15s;padding:0}
+.btn-ghost:hover{opacity:1}
+
+/* ── MARQUEE ── */
+.marquee-strip{background:var(--black);height:34px;display:flex;align-items:center;overflow:hidden}
+.marquee-inner{display:flex;gap:40px;animation:marquee 28s linear infinite;white-space:nowrap}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.marquee-item{font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(255,255,255,.65);text-transform:uppercase;letter-spacing:.8px}
+.marquee-dot{color:var(--royal-blue)}
+
+/* ── LAYOUT ── */
+.container{max-width:1240px;margin:0 auto;padding:0 48px}
+
+/* ── TYPOGRAPHY ── */
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:400;text-transform:uppercase;letter-spacing:.7px;opacity:.5;margin-bottom:20px;display:block}
+.eyebrow-blue{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.7px;color:var(--royal-blue);margin-bottom:20px;display:block}
+.display-xl{font-size:80px;font-weight:300;line-height:1.00;letter-spacing:-2px;margin-bottom:28px}
+.display-xl .hi{color:var(--royal-blue);font-weight:400}
+.display-lg{font-size:58px;font-weight:300;line-height:1.08;letter-spacing:-1.2px;margin-bottom:20px}
+.body-lg{font-size:19px;font-weight:400;line-height:1.5;letter-spacing:-0.2px;max-width:500px;margin-bottom:36px;opacity:.75}
+.subhead{font-size:22px;font-weight:300;line-height:1.4;letter-spacing:-0.3px;max-width:600px;margin-bottom:32px}
+
+/* ── HERO ── */
+.hero{padding:80px 0 72px}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:#EEF2FF;color:var(--royal-blue);font-size:13px;font-weight:600;letter-spacing:.2px;padding:6px 14px;border-radius:var(--pill);margin-bottom:28px}
+.hero-badge span{width:6px;height:6px;background:var(--royal-blue);border-radius:50%;display:inline-block}
+.hero-ctas{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:64px}
+.hero-ctas .btn-royal{font-size:17px;padding:12px 28px}
+.hero-ctas .btn-secondary{font-size:17px;padding:11px 24px}
+.hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--hairline);border:1px solid var(--hairline);border-radius:16px;overflow:hidden}
+.stat-item{background:var(--canvas);padding:28px 32px}
+.stat-number{font-size:44px;font-weight:300;letter-spacing:-1.5px;line-height:1;margin-bottom:6px;color:var(--royal-blue)}
+.stat-number .unit{color:var(--ink);font-weight:400}
+.stat-label{font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.7px;opacity:.45}
+
+/* ── COLOR BLOCKS ── */
+.color-block{border-radius:24px;padding:52px 56px;margin:0 0 var(--section)}
+.cb-lime{background:var(--block-lime)}
+.cb-coral{background:var(--block-coral)}
+.cb-navy{background:var(--block-navy);color:var(--inverse-ink)}
+
+/* ── SECTIONS ── */
+.white-section{padding:0 0 var(--section)}
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:44px}
+.feature-tile{background:var(--surface-soft);border-radius:16px;padding:36px 28px}
+.feature-icon{width:44px;height:44px;background:var(--royal-blue);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:20px}
+.feature-icon svg{width:20px;height:20px;stroke:white;fill:none;stroke-width:1.8}
+.feature-title{font-size:18px;font-weight:600;letter-spacing:-0.2px;margin-bottom:8px}
+.feature-body{font-size:15px;line-height:1.55;opacity:.65}
+.steps-row{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:36px}
+.step-num{font-size:44px;font-weight:200;line-height:1;margin-bottom:18px;color:var(--royal-blue);opacity:.35}
+.step-title{font-size:22px;font-weight:600;letter-spacing:-0.25px;margin-bottom:10px}
+.step-body{font-size:15px;opacity:.65;line-height:1.6}
+
+/* ── REGISTER ── */
+.register-section{padding:var(--section) 0;background:var(--block-coral)}
+.register-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
+
+/* ── FORM CARD ── */
+.form-card{background:var(--canvas);border-radius:24px;padding:40px;box-shadow:0 2px 24px rgba(0,0,0,.06)}
+.step-indicators{display:flex;gap:6px;margin-bottom:28px}
+.step-dot{height:3px;border-radius:2px;flex:1;background:var(--hairline);transition:background .25s}
+.step-dot.active{background:var(--royal-blue)}
+.step-dot.done{background:var(--black);opacity:.3}
+.step-label{font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.7px;opacity:.4;margin-bottom:24px;display:block}
+.form-step{display:none}.form-step.active{display:block}
+.field-group{margin-bottom:18px}
+label{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.6px;margin-bottom:7px;opacity:.5}
+input[type=text],input[type=email],select,textarea{width:100%;background:var(--canvas);color:var(--ink);font-family:'Inter',sans-serif;font-size:16px;letter-spacing:-0.2px;line-height:1.4;border:1px solid var(--hairline);border-radius:10px;padding:11px 14px;outline:none;transition:border-color .15s,box-shadow .15s;-webkit-appearance:none}
+input:focus,select:focus,textarea:focus{border-color:var(--royal-blue);box-shadow:0 0 0 3px rgba(65,105,225,.12)}
+select{cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%230A0A0A' stroke-width='1.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:36px}
+.input-hint{font-size:12px;opacity:.4;margin-top:5px}
+.form-nav{display:flex;justify-content:space-between;align-items:center;margin-top:28px}
+.btn-next{background:var(--black);color:var(--white);font-size:15px;font-weight:600;padding:10px 22px;border-radius:var(--pill);border:none;cursor:pointer;transition:opacity .15s}
+.btn-next:hover{opacity:.8}
+.btn-submit{background:var(--royal-blue);color:var(--white);font-size:15px;font-weight:600;padding:10px 24px;border-radius:var(--pill);border:none;cursor:pointer;transition:background .15s}
+.btn-submit:hover{background:var(--royal-blue-dark)}
+
+/* ── TAGS ── */
+.tags-wrap{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:10px}
+.tag-pill{padding:7px 15px;border-radius:var(--pill);border:1px solid var(--hairline);cursor:pointer;font-size:14px;transition:all .15s;user-select:none;background:var(--canvas)}
+.tag-pill:hover{border-color:var(--royal-blue);color:var(--royal-blue)}
+.tag-pill.sel{background:var(--royal-blue);color:var(--white);border-color:var(--royal-blue)}
+
+/* ── SCHEDULE GRID ── */
+.schedule-container{overflow-x:auto;margin-bottom:6px}
+.schedule-header{display:grid;grid-template-columns:52px repeat(7,1fr);gap:2px;margin-bottom:2px;min-width:340px}
+.sched-day-head{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.5px;text-align:center;opacity:.45;padding:4px 0}
+.schedule-body{display:flex;flex-direction:column;gap:2px;min-width:340px}
+.schedule-row{display:grid;grid-template-columns:52px repeat(7,1fr);gap:2px}
+.time-label{font-family:'JetBrains Mono',monospace;font-size:10px;opacity:.4;display:flex;align-items:center;justify-content:flex-end;padding-right:6px}
+.time-cell{height:26px;border-radius:4px;background:var(--surface-soft);cursor:pointer;transition:background .08s;border:1px solid transparent}
+.time-cell:hover{background:#C7D7FA}
+.time-cell.sel{background:var(--royal-blue);border-color:var(--royal-blue-dark)}
+.time-cell.sel:hover{background:var(--royal-blue-dark)}
+.schedule-hint{font-size:12px;opacity:.4;margin-top:5px}
+
+/* ── MATCH RESULTS ── */
+.match-header{text-align:center;margin-bottom:28px}
+.match-icon{width:52px;height:52px;background:var(--block-lime);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 14px}
+.match-icon svg{width:24px;height:24px;stroke:#2D5A00;stroke-width:2.2;fill:none}
+.match-title{font-size:22px;font-weight:700;letter-spacing:-0.3px;margin-bottom:4px}
+.match-sub{font-size:14px;opacity:.5}
+.match-list{display:flex;flex-direction:column;gap:12px}
+.match-card{border:1px solid var(--hairline);border-radius:14px;padding:18px 20px;transition:border-color .15s,box-shadow .15s}
+.match-card:hover{border-color:var(--royal-blue);box-shadow:0 2px 12px rgba(65,105,225,.1)}
+.match-card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:8px}
+.match-card-name{font-size:16px;font-weight:600;letter-spacing:-0.2px}
+.match-badge{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.5px;padding:4px 10px;border-radius:var(--pill);background:#EEF2FF;color:var(--royal-blue);white-space:nowrap;flex-shrink:0}
+.match-card-meta{font-size:13px;opacity:.55;line-height:1.5;margin-bottom:12px}
+.match-card-actions{display:flex;gap:8px}
+.btn-join-match{background:var(--royal-blue);color:white;font-size:13px;font-weight:600;padding:7px 16px;border-radius:var(--pill);border:none;cursor:pointer;transition:background .15s}
+.btn-join-match:hover:not(:disabled){background:var(--royal-blue-dark)}
+.btn-join-match.joined{background:#2D7A4A;cursor:default}
+.btn-join-match.open-chat{background:var(--block-lime);color:#2D5A00;cursor:pointer}
+.btn-view-match{background:none;color:var(--ink);font-size:13px;font-weight:500;padding:7px 14px;border-radius:var(--pill);border:1px solid var(--hairline);cursor:pointer;transition:border-color .15s}
+.btn-view-match:hover{border-color:var(--ink)}
+
+/* ── BROWSE ── */
+.browse-section{padding:var(--section) 0 var(--section)}
+.browse-toolbar{display:flex;align-items:center;gap:12px;margin-top:32px;margin-bottom:32px;flex-wrap:wrap}
+.search-bar{display:flex;align-items:center;gap:8px;flex:1;min-width:200px;background:var(--surface-soft);border:1px solid var(--hairline);border-radius:var(--pill);padding:10px 18px;transition:border-color .15s,box-shadow .15s}
+.search-bar:focus-within{border-color:var(--royal-blue);box-shadow:0 0 0 3px rgba(65,105,225,.1)}
+.search-bar svg{width:16px;height:16px;stroke:var(--ink);opacity:.4;fill:none;flex-shrink:0}
+.search-bar input{border:none;outline:none;background:transparent;font-family:'Inter',sans-serif;font-size:15px;color:var(--ink);width:100%}
+.search-bar input::placeholder{opacity:.4}
+.new-group-btn{display:inline-flex;align-items:center;gap:7px;padding:10px 20px;border-radius:var(--pill);border:1px solid var(--hairline);background:var(--canvas);font-size:14px;font-weight:600;cursor:pointer;transition:all .15s;white-space:nowrap}
+.new-group-btn:hover{border-color:var(--royal-blue);color:var(--royal-blue)}
+.new-group-btn svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2.2}
+.groups-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.group-card{background:var(--canvas);border-radius:20px;border:1px solid var(--hairline);padding:28px 24px;transition:box-shadow .2s,transform .2s,border-color .2s;position:relative;overflow:hidden}
+.group-card:hover{box-shadow:0 4px 20px rgba(0,0,0,.07);transform:translateY(-2px);border-color:#ccc}
+.group-card.joined{border-color:var(--royal-blue)}
+.joined-ribbon{display:none;position:absolute;top:16px;right:-26px;background:var(--royal-blue);color:white;font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.6px;padding:4px 40px;transform:rotate(45deg)}
+.group-card.joined .joined-ribbon{display:block}
+.group-subject{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px;color:var(--royal-blue)}
+.group-name{font-size:18px;font-weight:600;letter-spacing:-0.2px;margin-bottom:8px;cursor:pointer}
+.group-name:hover{text-decoration:underline;text-underline-offset:3px}
+.group-meta{font-size:13px;opacity:.55;margin-bottom:14px;line-height:1.6}
+.group-tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:18px}
+.group-tag{font-size:12px;padding:4px 10px;border-radius:var(--pill);background:var(--surface-soft)}
+.group-footer{display:flex;align-items:center;justify-content:space-between}
+.member-count{font-size:12px;opacity:.45}
+.join-btn{font-size:13px;font-weight:600;padding:7px 18px;border-radius:var(--pill);border:1px solid var(--hairline);background:none;cursor:pointer;transition:all .18s}
+.join-btn:hover:not(.joined-state){background:var(--royal-blue);color:white;border-color:var(--royal-blue)}
+.join-btn.joined-state{background:var(--block-lime);border-color:transparent;color:#2D5A00;cursor:pointer}
+.load-more-row{display:flex;justify-content:center;margin-top:32px}
+.load-more-btn{padding:11px 32px;border-radius:var(--pill);border:1px solid var(--hairline);background:var(--canvas);font-size:15px;font-weight:500;cursor:pointer;transition:border-color .15s}
+.load-more-btn:hover{border-color:var(--ink)}
+
+/* ── FAQ ── */
+.faq-section{padding:0 0 var(--section)}
+.faq-list{margin-top:36px;border-top:1px solid var(--hairline)}
+.faq-item{border-bottom:1px solid var(--hairline)}
+.faq-q{display:flex;justify-content:space-between;align-items:center;font-size:18px;font-weight:500;letter-spacing:-0.2px;padding:20px 0;cursor:pointer;gap:16px}
+.faq-q svg{width:18px;height:18px;stroke:currentColor;stroke-width:1.8;fill:none;flex-shrink:0;transition:transform .2s}
+.faq-item.open .faq-q svg{transform:rotate(180deg)}
+.faq-a{font-size:15px;line-height:1.65;max-height:0;overflow:hidden;transition:max-height .3s ease,padding .3s ease;opacity:.65}
+.faq-item.open .faq-a{max-height:220px;padding-bottom:20px}
+
+/* ── GROUP DETAIL MODAL ── */
+.modal-overlay{display:none;position:fixed;inset:0;z-index:500;background:rgba(10,10,10,.55);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:24px}
+.modal-overlay.open{display:flex}
+.modal{background:var(--canvas);border-radius:24px;width:100%;max-width:560px;max-height:88vh;overflow-y:auto;padding:40px;position:relative;box-shadow:0 24px 64px rgba(0,0,0,.18);animation:modalIn .22s ease}
+@keyframes modalIn{from{opacity:0;transform:scale(.96) translateY(12px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.modal-close{position:absolute;top:20px;right:20px;width:36px;height:36px;border-radius:50%;background:var(--surface-soft);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;transition:background .15s}
+.modal-close:hover{background:var(--hairline)}
+.modal-subject{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.6px;color:var(--royal-blue);margin-bottom:8px}
+.modal-title{font-size:28px;font-weight:700;letter-spacing:-0.5px;margin-bottom:6px}
+.modal-hosted{font-size:14px;opacity:.5;margin-bottom:24px}
+.modal-sh{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.6px;opacity:.4;margin-bottom:10px;margin-top:22px}
+.modal-row{display:flex;gap:10px;margin-bottom:8px;align-items:flex-start}
+.modal-row-icon{font-size:16px;flex-shrink:0;margin-top:1px}
+.modal-row-text{font-size:15px;line-height:1.5;opacity:.75}
+.modal-members{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+.m-avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:white}
+.spots-left{font-size:13px;opacity:.45}
+.modal-join-bar{margin-top:28px;padding-top:24px;border-top:1px solid var(--hairline);display:flex;gap:10px;align-items:center}
+.modal-join-bar .btn-royal{flex:1;justify-content:center;font-size:16px;padding:13px}
+
+/* ── CHAT MODAL ── */
+.chat-modal{max-width:600px;padding:0;display:flex;flex-direction:column;height:520px;overflow:hidden}
+.chat-header{padding:20px 24px 16px;border-bottom:1px solid var(--hairline);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.chat-group-name{font-size:17px;font-weight:700;letter-spacing:-0.3px;margin-bottom:2px}
+.chat-group-sub{font-size:13px;opacity:.45}
+.chat-members-bar{display:flex;align-items:center}
+.chat-member-dot{width:28px;height:28px;border-radius:50%;border:2px solid white;font-size:11px;font-weight:600;color:white;display:flex;align-items:center;justify-content:center;margin-left:-6px}
+.chat-messages{flex:1;overflow-y:auto;padding:20px 24px;display:flex;flex-direction:column;gap:14px}
+.chat-msg{display:flex;gap:10px;align-items:flex-end}
+.chat-msg.me{flex-direction:row-reverse}
+.chat-avatar{width:30px;height:30px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:white}
+.chat-bubble{max-width:72%;padding:10px 14px;border-radius:16px;font-size:14px;line-height:1.55;word-break:break-word}
+.chat-msg:not(.me) .chat-bubble{background:var(--surface-soft);color:var(--ink);border-bottom-left-radius:4px}
+.chat-msg.me .chat-bubble{background:var(--royal-blue);color:white;border-bottom-right-radius:4px}
+.chat-meta{font-size:11px;opacity:.35;margin-top:3px}
+.chat-msg.me .chat-meta{text-align:right}
+/* auto-resize textarea for chat */
+.chat-input-bar{padding:12px 16px;border-top:1px solid var(--hairline);display:flex;gap:10px;align-items:flex-end;flex-shrink:0}
+.chat-textarea{flex:1;border:1px solid var(--hairline);border-radius:16px;padding:10px 14px;font-family:'Inter',sans-serif;font-size:14px;outline:none;transition:border-color .15s;resize:none;min-height:40px;max-height:120px;overflow-y:auto;line-height:1.45;background:var(--canvas)}
+.chat-textarea:focus{border-color:var(--royal-blue);box-shadow:0 0 0 3px rgba(65,105,225,.1)}
+.chat-send{background:var(--royal-blue);color:white;border:none;border-radius:50%;width:38px;height:38px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .15s}
+.chat-send:hover{background:var(--royal-blue-dark)}
+.chat-send svg{width:15px;height:15px;stroke:white;fill:none;stroke-width:2.5}
+
+/* ── NEW GROUP MODAL ── */
+.new-group-modal{max-width:580px}
+.ng-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.ng-row .field-group{margin-bottom:0}
+
+/* ── APPLY / PENDING ── */
+.btn-apply{background:transparent;color:var(--royal-blue);font-size:13px;font-weight:600;padding:7px 18px;border-radius:var(--pill);border:1.5px solid var(--royal-blue);cursor:pointer;transition:all .18s;letter-spacing:-0.1px}
+.btn-apply:hover{background:var(--royal-blue);color:white}
+.join-btn.pending-state{background:#FFF8E7;border-color:#F0C040;color:#8A6800;cursor:default;font-size:13px}
+.pending-badge{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:500;color:#8A6800;background:#FFF8E7;border:1px solid #F0C040;padding:3px 10px;border-radius:var(--pill);white-space:nowrap}
+/* Apply modal */
+.apply-modal{max-width:480px}
+.apply-modal .modal-title{font-size:22px;margin-bottom:6px}
+.apply-steps{display:flex;align-items:center;gap:8px;margin:18px 0 24px;font-size:13px;opacity:.55}
+.apply-step-dot{width:24px;height:24px;border-radius:50%;background:var(--royal-blue);color:white;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.apply-step-dot.done{background:#2D7A4A}
+.apply-step-line{flex:1;height:1px;background:var(--hairline)}
+/* My page pending section */
+.my-tab-row{display:flex;gap:4px;margin-bottom:28px}
+.my-tab{padding:7px 18px;border-radius:var(--pill);border:1px solid var(--hairline);background:none;font-size:14px;font-weight:500;cursor:pointer;transition:all .15s}
+.my-tab.active{background:var(--ink);color:white;border-color:var(--ink)}
+.pending-list{display:flex;flex-direction:column;gap:10px}
+.pending-row{border:1px solid #F0C040;background:#FFFDF0;border-radius:14px;padding:16px 20px;display:flex;align-items:center;gap:14px}
+.pending-icon{font-size:20px;flex-shrink:0}
+.pending-info{flex:1}
+.pending-name{font-size:16px;font-weight:600;letter-spacing:-0.2px;margin-bottom:2px}
+.pending-sub{font-size:13px;opacity:.55}
+.pending-tag{font-size:12px;font-weight:500;color:#8A6800;background:#FFF8E7;border:1px solid #F0C040;padding:3px 10px;border-radius:var(--pill)}
+/* ── MY PAGE ── */
+.my-page{padding:64px 0 var(--section)}
+.my-page-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:48px;gap:24px;flex-wrap:wrap}
+.my-avatar-block{display:flex;align-items:center;gap:20px}
+.my-avatar{width:72px;height:72px;border-radius:50%;background:var(--royal-blue);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:700;color:white;flex-shrink:0}
+.my-name{font-size:32px;font-weight:300;letter-spacing:-0.8px;margin-bottom:4px}
+.my-sub{font-size:15px;opacity:.5;letter-spacing:-0.1px}
+.my-stats-row{display:flex;gap:32px;margin-bottom:32px;border-bottom:1px solid var(--hairline);padding-bottom:32px}
+.my-stat{text-align:center}
+.my-stat-num{font-size:36px;font-weight:300;letter-spacing:-1px;line-height:1;margin-bottom:4px;color:var(--royal-blue)}
+.my-stat-num .unit{color:var(--ink);font-weight:400}
+.my-stat-label{font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.6px;opacity:.45}
+.my-search-bar{display:flex;align-items:center;gap:8px;background:var(--surface-soft);border:1px solid var(--hairline);border-radius:var(--pill);padding:10px 18px;margin-bottom:24px;max-width:480px;transition:border-color .15s,box-shadow .15s}
+.my-search-bar:focus-within{border-color:var(--royal-blue);box-shadow:0 0 0 3px rgba(65,105,225,.1)}
+.my-search-bar svg{width:16px;height:16px;stroke:var(--ink);opacity:.4;fill:none;flex-shrink:0}
+.my-search-bar input{border:none;outline:none;background:transparent;font-family:'Inter',sans-serif;font-size:15px;color:var(--ink);width:100%}
+.my-search-bar input::placeholder{opacity:.4}
+.my-groups-list{display:flex;flex-direction:column;gap:12px}
+.my-group-row{border:1px solid var(--hairline);border-radius:16px;padding:20px 24px;display:flex;align-items:center;gap:16px;cursor:pointer;transition:border-color .15s,box-shadow .15s}
+.my-group-row:hover{border-color:var(--royal-blue);box-shadow:0 2px 12px rgba(65,105,225,.08)}
+.my-group-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.my-group-info{flex:1;min-width:0}
+.my-group-name{font-size:17px;font-weight:600;letter-spacing:-0.2px;margin-bottom:4px}
+.my-group-sub{font-size:13px;opacity:.5;letter-spacing:-0.1px}
+.my-group-right{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.my-unread{background:var(--royal-blue);color:white;font-size:11px;font-weight:700;padding:2px 8px;border-radius:var(--pill)}
+.my-open-chat-btn{font-size:13px;font-weight:600;padding:7px 16px;border-radius:var(--pill);border:1px solid var(--hairline);background:none;cursor:pointer;transition:all .15s;white-space:nowrap}
+.my-open-chat-btn:hover{background:var(--royal-blue);color:white;border-color:var(--royal-blue)}
+.my-empty{text-align:center;padding:64px 0;opacity:.4}
+.my-empty-icon{font-size:40px;margin-bottom:16px}
+.my-empty-text{font-size:18px;font-weight:400}
+
+/* ── FOOTER ── */
+footer{background:var(--canvas);border-top:1px solid var(--hairline);padding:64px 48px 40px}
+.footer-inner{max-width:1240px;margin:0 auto}
+.footer-wordmark{font-size:40px;font-weight:200;letter-spacing:-1.5px;margin-bottom:6px;line-height:1}
+.footer-wordmark .Y{color:var(--royal-blue);font-weight:400}
+.footer-sub{font-size:13px;opacity:.4;margin-bottom:40px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:32px;margin-bottom:48px}
+.footer-col-head{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.7px;margin-bottom:14px;opacity:.4}
+.footer-link{display:block;font-size:14px;color:var(--ink);text-decoration:none;margin-bottom:9px;transition:opacity .15s;opacity:.65}
+.footer-link:hover{opacity:1}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;font-size:13px;opacity:.35;padding-top:24px;border-top:1px solid var(--hairline-soft)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:960px){nav{padding:0 24px}.nav-links{display:none}.container{padding:0 24px}.display-xl{font-size:52px;letter-spacing:-1.2px}.display-lg{font-size:38px;letter-spacing:-0.8px}.features-grid,.steps-row{grid-template-columns:1fr}.register-grid{grid-template-columns:1fr}.groups-grid{grid-template-columns:1fr 1fr}.hero-stats{grid-template-columns:1fr}.footer-grid{grid-template-columns:1fr 1fr}.ng-row{grid-template-columns:1fr}.my-stats-row{gap:20px}}
+@media(max-width:640px){.display-xl{font-size:38px}.groups-grid{grid-template-columns:1fr}.color-block{border-radius:0;padding:40px 24px}.footer-grid{grid-template-columns:1fr}.my-group-row{flex-wrap:wrap}}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" onclick="showPage('home')">stud<span class="Y">Y</span></a>
+  <div class="nav-links">
+    <button class="nav-link" onclick="showPage('home');navScrollTo('how-it-works')">How it works</button>
+    <button class="nav-link" onclick="showPage('home');navScrollTo('register')">Register</button>
+    <button class="nav-link" onclick="showPage('home');navScrollTo('browse')">Browse groups</button>
+    <button class="nav-link" onclick="showPage('home');navScrollTo('faq')">FAQ</button>
+  </div>
+  <div class="nav-ctas">
+    <button class="btn-secondary" onclick="showPage('mypage')">My Page</button>
+    <button class="btn-royal" onclick="showPage('home');navScrollTo('register')">Join free</button>
+  </div>
+</nav>
+
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-inner">
+    <span class="marquee-item">IT Foundation</span><span class="marquee-item marquee-dot">·</span>
+    <span class="marquee-item">Computer Programming</span><span class="marquee-item marquee-dot">·</span>
+    <span class="marquee-item">Interaction Design</span><span class="marquee-item marquee-dot">·</span>
+    <span class="marquee-item">Color Design</span><span class="marquee-item marquee-dot">·</span>
+    <span class="marquee-item">Human-AI Interaction</span><span class="marquee-item marquee-dot">·</span>
+    <span class="marquee-item">Editorial Design</span><span class="marquee-item marquee-dot">·</span>
+    <span class="marquee-item">Storytelling &amp; Visualization</span><span class="marquee-item marquee-dot">·</span>
+    <span class="marquee-item">Design History</span><span class="marquee-item marquee-dot">·</span>
+    <span class="marquee-item">MCP Servers &amp; AI Agents</span><span class="marquee-item marquee-dot">·</span>
+    <span class="marquee-item">Senior Project</span><span class="marquee-item marquee-dot">·</span>
+    <span class="marquee-item">IT Foundation</span><span class="marquee-item marquee-dot">·</span>
+    <span class="marquee-item">Computer Programming</span><span class="marquee-item marquee-dot">·</span>
+    <span class="marquee-item">Interaction Design</span><span class="marquee-item marquee-dot">·</span>
+    <span class="marquee-item">Color Design</span><span class="marquee-item marquee-dot">·</span>
+    <span class="marquee-item">Human-AI Interaction</span><span class="marquee-item marquee-dot">·</span>
+    <span class="marquee-item">Editorial Design</span><span class="marquee-item marquee-dot">·</span>
+    <span class="marquee-item">Storytelling &amp; Visualization</span><span class="marquee-item marquee-dot">·</span>
+    <span class="marquee-item">Design History</span><span class="marquee-item marquee-dot">·</span>
+    <span class="marquee-item">MCP Servers &amp; AI Agents</span><span class="marquee-item marquee-dot">·</span>
+    <span class="marquee-item">Senior Project</span><span class="marquee-item marquee-dot">·</span>
+  </div>
+</div>
+
+<!-- ════ HOME PAGE ════ -->
+<div id="page-home" class="page active">
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-badge"><span></span> IID · Underwood International College · Yonsei</div>
+    <h1 class="display-xl">Study smarter,<br><span class="hi">IID style.</span></h1>
+    <p class="body-lg">Find study partners who take the same IID courses, have the same free slots, and want the same outcomes. No groupchat hunting.</p>
+    <div class="hero-ctas">
+      <button class="btn-royal" onclick="navScrollTo('register')" style="font-size:17px;padding:12px 28px">Register now →</button>
+      <button class="btn-secondary" onclick="navScrollTo('browse')" style="font-size:17px;padding:11px 24px">Browse open groups</button>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item"><div class="stat-number">54<span class="unit">+</span></div><div class="stat-label">IID students</div></div>
+      <div class="stat-item"><div class="stat-number">18</div><div class="stat-label">Active groups</div></div>
+      <div class="stat-item"><div class="stat-number">94<span class="unit">%</span></div><div class="stat-label">Find a match</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how-it-works">
+  <div class="container">
+    <div class="color-block cb-lime">
+      <span class="eyebrow-blue" style="opacity:1">How it works</span>
+      <h2 class="display-lg">Three steps to your group.</h2>
+      <div class="steps-row">
+        <div><div class="step-num">01</div><div class="step-title">Register</div><div class="step-body">Set your availability on a visual time grid. Pick IID courses and study goals. Under two minutes.</div></div>
+        <div><div class="step-num">02</div><div class="step-title">Get matched</div><div class="step-body">We surface groups with the best schedule and subject overlap — sorted by fit, not alphabet.</div></div>
+        <div><div class="step-num">03</div><div class="step-title">Join &amp; chat</div><div class="step-body">Join a group and use the built-in group chat. Coordinate at Veritas, the library, or on Zoom.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="white-section">
+  <div class="container">
+    <span class="eyebrow">Built for IID</span>
+    <h2 class="display-lg" style="max-width:680px">Everything a busy designer needs.</h2>
+    <div class="features-grid">
+      <div class="feature-tile">
+        <div class="feature-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>
+        <div class="feature-title">Visual schedule matching</div>
+        <div class="feature-body">Click cells on a weekly grid to mark when you're free. Drag across slots. We compute the overlap instantly.</div>
+      </div>
+      <div class="feature-tile">
+        <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg></div>
+        <div class="feature-title">IID course catalogue</div>
+        <div class="feature-body">All 19 IID courses pre-loaded. Filter by college → major → course, or type in anything that's missing.</div>
+      </div>
+      <div class="feature-tile">
+        <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+        <div class="feature-title">Built-in group chat</div>
+        <div class="feature-body">Every group gets a shared chatroom the moment you join. Coordinate sessions, share links, ask questions.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NAVY BLOCK -->
+<section>
+  <div class="container">
+    <div class="color-block cb-navy">
+      <span class="eyebrow" style="color:rgba(255,255,255,.4);opacity:1">Yonsei International Campus</span>
+      <h2 class="display-lg">Meet at Veritas.<br>Or anywhere online.</h2>
+      <p class="subhead" style="opacity:.65;color:white">Library rooms, Veritas Hall, Café Underwood — or a Zoom link. Every group shows its venue before you commit.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn-royal" onclick="navScrollTo('register')" style="background:white;color:#1A1F3C;font-weight:700">Register now</button>
+        <button class="btn-secondary" onclick="navScrollTo('browse')" style="color:white;border-color:rgba(255,255,255,.3)">Browse groups</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REGISTER -->
+<section id="register" class="register-section">
+  <div class="container">
+    <div class="register-grid">
+      <div>
+        <span class="eyebrow-blue" style="opacity:1">Register</span>
+        <h2 class="display-lg">Join in under<br>two minutes.</h2>
+        <p class="subhead" style="font-size:18px;margin-top:12px;opacity:.7">Tell us your IID schedule and courses. We'll show your three best group matches — right here, right now.</p>
+      </div>
+      <div>
+        <div class="form-card">
+          <div class="step-indicators">
+            <div class="step-dot active" id="sd1"></div>
+            <div class="step-dot" id="sd2"></div>
+            <div class="step-dot" id="sd3"></div>
+            <div class="step-dot" id="sd4"></div>
+          </div>
+
+          <!-- STEP 1 -->
+          <div class="form-step active" id="fs1">
+            <span class="step-label">Step 1 of 3 — About you</span>
+            <div class="field-group"><label>Full name</label><input type="text" id="fn" placeholder="e.g. Kim Jiwon"></div>
+            <div class="field-group"><label>Yonsei email</label><input type="email" id="em" placeholder="id@yonsei.ac.kr"><div class="input-hint">Must be a @yonsei.ac.kr address</div></div>
+            <div class="field-group"><label>Year</label><select id="yr"><option value="">Select year</option><option>1st year (Freshman)</option><option>2nd year (Sophomore)</option><option>3rd year (Junior)</option><option>4th year (Senior)</option></select></div>
+            <div class="form-nav"><span></span><button class="btn-next" onclick="goStep(2)">Continue →</button></div>
+          </div>
+
+          <!-- STEP 2 — availability only (no redundant schedule) -->
+          <div class="form-step" id="fs2">
+            <span class="step-label">Step 2 of 3 — Availability</span>
+            <label style="margin-bottom:12px">Click or drag to mark when you're free each week</label>
+            <div class="schedule-container">
+              <div class="schedule-header">
+                <div></div>
+                <div class="sched-day-head">Mon</div><div class="sched-day-head">Tue</div>
+                <div class="sched-day-head">Wed</div><div class="sched-day-head">Thu</div>
+                <div class="sched-day-head">Fri</div><div class="sched-day-head">Sat</div>
+                <div class="sched-day-head">Sun</div>
+              </div>
+              <div class="schedule-body" id="time-grid"></div>
+            </div>
+            <div class="schedule-hint">Click and drag to select multiple slots at once</div>
+            <div class="field-group" style="margin-top:20px">
+              <label>Preferred format</label>
+              <div class="tags-wrap">
+                <div class="tag-pill" onclick="pickOne(this)">In-person</div>
+                <div class="tag-pill" onclick="pickOne(this)">Virtual (Zoom)</div>
+                <div class="tag-pill" onclick="pickOne(this)">Either works</div>
+              </div>
+            </div>
+            <div class="form-nav"><button class="btn-ghost" onclick="goStep(1)">← Back</button><button class="btn-next" onclick="goStep(3)">Continue →</button></div>
+          </div>
+
+          <!-- STEP 3 -->
+          <div class="form-step" id="fs3">
+            <span class="step-label">Step 3 of 3 — Courses &amp; Goals</span>
+            <div class="field-group"><label>College</label><select id="sel-college" onchange="updateDept()"><option value="">Select college</option><option value="uic">Underwood International College (UIC)</option></select></div>
+            <div class="field-group"><label>Major / Department</label><select id="sel-dept" disabled onchange="updateCourse()"><option value="">Select department</option><option value="iid">Information &amp; Interaction Design (IID)</option></select></div>
+            <div class="field-group"><label>Course</label>
+              <select id="sel-course" disabled onchange="addCourseTag()">
+                <option value="">Select a course to add</option>
+                <option>IT Foundation</option><option>Computer Programming and Literacy</option>
+                <option>Design &amp; City in Culture</option><option>Culture and Design Trends</option>
+                <option>Strategic Marketing</option><option>Basic Drawing</option>
+                <option>Storytelling and Visualization for Designers</option><option>Color Design</option>
+                <option>Introduction to Digital Tools</option><option>Communicating with Type</option>
+                <option>Design History</option><option>Theories and Practices of Media Art</option>
+                <option>Media and Society</option><option>Tool Using AI Agents Using MCP Servers</option>
+                <option>Editorial Design</option><option>Interaction Design</option>
+                <option>Human-AI Interaction</option><option>Senior Project</option>
+                <option>Techno-Art Capstone Project</option>
+              </select>
+              <div class="input-hint">Select multiple — each adds a tag below</div>
+            </div>
+            <div id="selected-courses" class="tags-wrap" style="min-height:28px"></div>
+            <div class="field-group" style="margin-top:4px"><label>Other course not listed?</label><input type="text" id="manual-course" placeholder="e.g. UIC Writing Seminar — press Enter to add"><div class="input-hint">Press Enter to add</div></div>
+            <div class="field-group">
+              <label>Study goal — pick all that apply</label>
+              <div class="tags-wrap" id="goal-pills">
+                <div class="tag-pill" onclick="toggleTag(this)">Exam prep</div>
+                <div class="tag-pill" onclick="toggleTag(this)">Problem sets</div>
+                <div class="tag-pill" onclick="toggleTag(this)">Project collaboration</div>
+                <div class="tag-pill" onclick="toggleTag(this)">Critique &amp; feedback</div>
+                <div class="tag-pill" onclick="toggleTag(this)">Concept review</div>
+                <div class="tag-pill" onclick="toggleTag(this)">Portfolio review</div>
+                <div class="tag-pill" onclick="toggleTag(this)">Reading group</div>
+                <div class="tag-pill" onclick="toggleTag(this)">Skill-sharing</div>
+              </div>
+            </div>
+            <div class="field-group"><label>Something else? Type your goal</label><input type="text" id="custom-goal" placeholder="e.g. Weekly design crit sessions"><div class="input-hint">Optional — only if none of the above fit</div></div>
+            <div class="form-nav"><button class="btn-ghost" onclick="goStep(2)">← Back</button><button class="btn-submit" onclick="submitForm()">Find my groups →</button></div>
+          </div>
+
+          <!-- STEP 4 — MATCH RESULTS -->
+          <div class="form-step" id="fs4">
+            <div class="match-header">
+              <div class="match-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div class="match-title">You're in, <span id="user-name-display">friend</span>!</div>
+              <div class="match-sub">3 groups matched your schedule &amp; courses</div>
+            </div>
+            <div class="match-list">
+              <div class="match-card">
+                <div class="match-card-top"><div class="match-card-name">Interaction Design Collective</div><div class="match-badge">95% match</div></div>
+                <div class="match-card-meta">📍 Veritas B Hall 302 · Tue &amp; Thu 6–8 PM · 3/6 members</div>
+                <div class="match-card-actions">
+                  <button class="btn-join-match" id="mj-1" onclick="joinFromMatch(1,this)">Join group</button>
+                  <button class="btn-view-match" onclick="openGroupModal(1)">View details</button>
+                </div>
+              </div>
+              <div class="match-card">
+                <div class="match-card-top"><div class="match-card-name">Human-AI Interaction Lab</div><div class="match-badge">88% match</div></div>
+                <div class="match-card-meta">💻 Zoom · Mon &amp; Wed 7–9 PM · 4/6 members</div>
+                <div class="match-card-actions">
+                  <button class="btn-join-match" id="mj-0" onclick="joinFromMatch(0,this)">Join group</button>
+                  <button class="btn-view-match" onclick="openGroupModal(0)">View details</button>
+                </div>
+              </div>
+              <div class="match-card">
+                <div class="match-card-top"><div class="match-card-name">MCP Agents Study Crew</div><div class="match-badge">81% match</div></div>
+                <div class="match-card-meta">📍 Underwood Library 2F · Sat 2–5 PM · 2/6 members</div>
+                <div class="match-card-actions">
+                  <button class="btn-join-match" id="mj-4" onclick="joinFromMatch(4,this)">Join group</button>
+                  <button class="btn-view-match" onclick="openGroupModal(4)">View details</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BROWSE — extra top padding so coral section breathes -->
+<section id="browse" class="browse-section" style="padding-top:var(--section)">
+  <div class="container">
+    <span class="eyebrow">Browse groups</span>
+    <h2 class="display-lg" style="max-width:620px;margin-bottom:10px">Open groups this week.</h2>
+    <p class="body-lg" style="margin-bottom:0">IID · Underwood International College · Yonsei International Campus</p>
+    <div class="browse-toolbar">
+      <div class="search-bar">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+        <input type="text" id="search-input" placeholder="Search by course, topic, or schedule…" oninput="filterGroups()">
+      </div>
+      <button class="new-group-btn" onclick="openNewGroupModal()">
+        <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        New group
+      </button>
+    </div>
+    <div class="groups-grid" id="groups-grid"></div>
+    <div class="load-more-row"><button class="load-more-btn">Load more groups</button></div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="faq-section">
+  <div class="container">
+    <span class="eyebrow">FAQ</span>
+    <h2 class="display-lg" style="max-width:560px">Common questions.</h2>
+    <div class="faq-list">
+      <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">Is studY free to use? <svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div><div class="faq-a">Yes — joining and browsing groups is completely free for all Yonsei IID students.</div></div>
+      <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">Do I need a Yonsei email? <svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div><div class="faq-a">Yes — a @yonsei.ac.kr address keeps groups within the academic community. We verify once at sign-up.</div></div>
+      <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">How does schedule matching work? <svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div><div class="faq-a">We compare your selected time cells with all students in your chosen courses, scoring groups by overlap quality and shared goals. Your match percentage reflects actual availability fit.</div></div>
+      <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">Can I be in more than one group? <svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div><div class="faq-a">Absolutely. Most IID students join 2–3 groups across different courses. You manage all of them from My Page.</div></div>
+      <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">What if my course isn't in the list? <svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div><div class="faq-a">Use the "Other course not listed?" text field in Step 3. Type any course name and press Enter to add it as a tag.</div></div>
+      <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">Where do groups typically meet on campus? <svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div><div class="faq-a">Veritas B Hall seminar rooms, Underwood Library 2F, Café Underwood, and the IID studio in Veritas A are popular spots. Virtual groups share Zoom links in the group chatroom.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-wordmark">stud<span class="Y">Y</span></div>
+    <div class="footer-sub">Yonsei University · IID · Underwood International College</div>
+    <div class="footer-grid">
+      <div><div class="footer-col-head">About</div><p style="font-size:14px;opacity:.55;line-height:1.65;max-width:260px">studY is a peer-built platform for Yonsei IID students to find study partners based on real schedules and shared coursework.</p></div>
+      <div><div class="footer-col-head">Platform</div><a href="#register" class="footer-link">Register</a><a href="#browse" class="footer-link">Browse groups</a><a href="#how-it-works" class="footer-link">How it works</a></div>
+      <div><div class="footer-col-head">Campus</div><a href="#" class="footer-link">Yonsei Portal</a><a href="#" class="footer-link">IID Program</a><a href="#" class="footer-link">UIC Homepage</a></div>
+      <div><div class="footer-col-head">Legal</div><a href="#" class="footer-link">Privacy</a><a href="#" class="footer-link">Terms</a><a href="#" class="footer-link">Contact</a></div>
+    </div>
+    <div class="footer-bottom"><span>© 2025 studY · Yonsei IID</span><span>Made by IID students, for IID students.</span></div>
+  </div>
+</footer>
+
+</div><!-- /page-home -->
+
+<!-- ════ MY PAGE ════ -->
+<div id="page-mypage" class="page">
+  <div class="container">
+    <div class="my-page">
+      <div class="my-page-header">
+        <div class="my-avatar-block">
+          <div class="my-avatar" id="my-avatar-initials">?</div>
+          <div>
+            <div class="my-name" id="my-name-display">My Groups</div>
+            <div class="my-sub" id="my-email-display">IID · Yonsei International Campus</div>
+          </div>
+        </div>
+        <button class="btn-secondary" onclick="showPage('home')">← Back to home</button>
+      </div>
+      <div class="my-stats-row">
+        <div class="my-stat"><div class="my-stat-num" id="stat-joined">0</div><div class="my-stat-label">Groups joined</div></div>
+        <div class="my-stat"><div class="my-stat-num" id="stat-courses">0</div><div class="my-stat-label">Courses</div></div>
+        <div class="my-stat"><div class="my-stat-num" id="stat-members">0</div><div class="my-stat-label">Groupmates</div></div>
+        <div class="my-stat"><div class="my-stat-num" id="stat-pending" style="color:#F0A000">0</div><div class="my-stat-label">Pending</div></div>
+      </div>
+      <div class="my-tab-row">
+        <button class="my-tab active" id="tab-joined" onclick="switchMyTab('joined')">Joined groups</button>
+        <button class="my-tab" id="tab-pending" onclick="switchMyTab('pending')">Pending applications</button>
+      </div>
+      <div class="my-search-bar" id="my-search-wrap">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+        <input type="text" id="my-search" placeholder="Search your groups…" oninput="renderMyPage()">
+      </div>
+      <div class="my-groups-list" id="my-groups-list"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════ GROUP DETAIL MODAL ════ -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModalOutside(event,'modal-overlay')">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('modal-overlay')">✕</button>
+    <div class="modal-subject" id="m-subject"></div>
+    <div class="modal-title" id="m-title"></div>
+    <div class="modal-hosted" id="m-hosted"></div>
+    <div class="modal-sh">Meeting details</div>
+    <div class="modal-row"><div class="modal-row-icon">📍</div><div class="modal-row-text" id="m-location"></div></div>
+    <div class="modal-row"><div class="modal-row-icon">📅</div><div class="modal-row-text" id="m-schedule"></div></div>
+    <div class="modal-row"><div class="modal-row-icon">🎯</div><div class="modal-row-text" id="m-goal"></div></div>
+    <div class="modal-sh">Members</div>
+    <div class="modal-members" id="m-members"></div>
+    <div class="spots-left" id="m-spots"></div>
+    <div class="modal-join-bar">
+      <button class="btn-royal" id="m-join-btn">Join this group</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════ CHAT MODAL ════ -->
+<div class="modal-overlay" id="chat-overlay" onclick="closeModalOutside(event,'chat-overlay')">
+  <div class="modal chat-modal">
+    <div class="chat-header">
+      <div>
+        <div class="chat-group-name" id="chat-group-name">Group Chat</div>
+        <div class="chat-group-sub" id="chat-group-sub"></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <div class="chat-members-bar" id="chat-members-bar"></div>
+        <button class="modal-close" style="position:static" onclick="closeModal('chat-overlay')">✕</button>
+      </div>
+    </div>
+    <div class="chat-messages" id="chat-messages"></div>
+    <div class="chat-input-bar">
+      <textarea class="chat-textarea" id="chat-textarea" placeholder="Message the group…" rows="1" oninput="autoResizeChat(this)" onkeydown="chatKeydown(event)"></textarea>
+      <button class="chat-send" onclick="sendChat()"><svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
+    </div>
+  </div>
+</div>
+
+<!-- ════ NEW GROUP MODAL ════ -->
+<div class="modal-overlay" id="ng-overlay" onclick="closeModalOutside(event,'ng-overlay')">
+  <div class="modal new-group-modal">
+    <button class="modal-close" onclick="closeModal('ng-overlay')">✕</button>
+    <div class="modal-subject">Create a new group</div>
+    <div class="modal-title" style="font-size:22px;margin-bottom:24px">Start your study group</div>
+
+    <div class="field-group"><label>Group name</label><input type="text" id="ng-name" placeholder="e.g. Interaction Design Crit Club"></div>
+
+    <div class="field-group"><label>Course</label>
+      <select id="ng-course">
+        <option value="">Select course</option>
+        <option>IT Foundation</option><option>Computer Programming and Literacy</option>
+        <option>Design &amp; City in Culture</option><option>Culture and Design Trends</option>
+        <option>Strategic Marketing</option><option>Basic Drawing</option>
+        <option>Storytelling and Visualization for Designers</option><option>Color Design</option>
+        <option>Introduction to Digital Tools</option><option>Communicating with Type</option>
+        <option>Design History</option><option>Theories and Practices of Media Art</option>
+        <option>Media and Society</option><option>Tool Using AI Agents Using MCP Servers</option>
+        <option>Editorial Design</option><option>Interaction Design</option>
+        <option>Human-AI Interaction</option><option>Senior Project</option>
+        <option>Techno-Art Capstone Project</option><option>Other</option>
+      </select>
+    </div>
+
+    <div class="ng-row">
+      <div class="field-group"><label>Format</label><select id="ng-format"><option>In-person</option><option>Virtual (Zoom)</option><option>Hybrid</option></select></div>
+      <div class="field-group"><label>Max members</label><select id="ng-max"><option>4</option><option selected>6</option><option>8</option><option>10</option></select></div>
+    </div>
+
+    <div class="field-group"><label>Meeting place or Zoom link</label><input type="text" id="ng-place" placeholder="e.g. Veritas B Hall 302 or zoom.us/j/…"></div>
+
+    <!-- Replaced separate recurring schedule + time grid with a single clear prompt -->
+    <div class="field-group">
+      <label>When does the group meet?</label>
+      <div class="schedule-container">
+        <div class="schedule-header" style="min-width:300px">
+          <div></div>
+          <div class="sched-day-head">Mon</div><div class="sched-day-head">Tue</div>
+          <div class="sched-day-head">Wed</div><div class="sched-day-head">Thu</div>
+          <div class="sched-day-head">Fri</div><div class="sched-day-head">Sat</div>
+          <div class="sched-day-head">Sun</div>
+        </div>
+        <div class="schedule-body" id="ng-time-grid" style="min-width:300px"></div>
+      </div>
+      <div class="schedule-hint">Select the recurring time slots for your group meetings</div>
+    </div>
+
+    <div class="field-group">
+      <label>Study goal — pick all that apply</label>
+      <div class="tags-wrap" id="ng-goal-pills">
+        <div class="tag-pill" onclick="toggleTag(this)">Exam prep</div>
+        <div class="tag-pill" onclick="toggleTag(this)">Problem sets</div>
+        <div class="tag-pill" onclick="toggleTag(this)">Project collaboration</div>
+        <div class="tag-pill" onclick="toggleTag(this)">Critique &amp; feedback</div>
+        <div class="tag-pill" onclick="toggleTag(this)">Concept review</div>
+        <div class="tag-pill" onclick="toggleTag(this)">Portfolio review</div>
+        <div class="tag-pill" onclick="toggleTag(this)">Reading group</div>
+        <div class="tag-pill" onclick="toggleTag(this)">Skill-sharing</div>
+      </div>
+    </div>
+    <div class="field-group"><label>Other goal not listed?</label><input type="text" id="ng-custom-goal" placeholder="e.g. Weekly design crit sessions"><div class="input-hint">Optional</div></div>
+
+    <div style="display:flex;gap:10px;margin-top:24px">
+      <button class="btn-royal" style="flex:1;justify-content:center;font-size:16px;padding:13px" onclick="createGroup()">Create group</button>
+      <button class="btn-secondary" onclick="closeModal('ng-overlay')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════ APPLY MODAL ════ -->
+<div class="modal-overlay" id="apply-overlay" onclick="closeModalOutside(event,'apply-overlay')">
+  <div class="modal apply-modal">
+    <button class="modal-close" onclick="closeModal('apply-overlay')">✕</button>
+    <div class="modal-subject" id="apply-subject"></div>
+    <div class="modal-title">Apply to join</div>
+    <div class="modal-hosted" id="apply-group-name"></div>
+    <div class="apply-steps">
+      <div class="apply-step-dot">1</div>
+      <div style="font-size:13px;opacity:.6">Apply</div>
+      <div class="apply-step-line"></div>
+      <div class="apply-step-dot" style="background:var(--hairline);color:var(--ink)">2</div>
+      <div style="font-size:13px;opacity:.6">Leader reviews</div>
+      <div class="apply-step-line"></div>
+      <div class="apply-step-dot" style="background:var(--hairline);color:var(--ink)">3</div>
+      <div style="font-size:13px;opacity:.6">Admitted → chat</div>
+    </div>
+    <div class="field-group"><label>Why do you want to join?</label><textarea id="apply-reason" placeholder="e.g. I'm taking Interaction Design this semester and struggling with the prototyping assignments. Looking for a regular crit group." rows="3" style="min-height:90px"></textarea></div>
+    <div class="field-group"><label>What can you bring to the group?</label><textarea id="apply-contribute" placeholder="e.g. Strong in visual design, happy to review others' layouts." rows="2" style="min-height:70px"></textarea></div>
+    <div class="field-group"><label>Availability note (optional)</label><input type="text" id="apply-avail" placeholder="e.g. Flexible on Tue/Thu evenings"><div class="input-hint">Group will see this when reviewing your application</div></div>
+    <div style="display:flex;gap:10px;margin-top:20px">
+      <button class="btn-submit" style="flex:1;font-size:16px;padding:13px" onclick="submitApply()">Send application</button>
+      <button class="btn-secondary" onclick="closeModal('apply-overlay')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const AC=['#4169E1','#D43F7A','#2D7A4A','#B8510A','#6B3FA0','#1A6B8A'];
+const GROUP_EMOJIS=['🎨','💻','🎯','📐','🤖','📚','✏️','🧠'];
+const MSGS={
+  0:[{a:'KJ',t:'Hey everyone! Shall we focus on the ethics readings this week?',ts:'Mon 7:04 PM'},{a:'SL',t:'Yes! Chapter 5. Going to be on the midterm for sure.',ts:'Mon 7:06 PM'},{a:'MK',t:'I have notes I can share before Tuesday 🙌',ts:'Mon 7:09 PM'}],
+  1:[{a:'YC',t:"Can we push Wednesday's session to 7PM? Studio runs late.",ts:'Tue 5:12 PM'},{a:'JL',t:'Works for me. Veritas B 302 still?',ts:'Tue 5:15 PM'},{a:'PK',t:"Confirmed. I'll bring printed wireframes.",ts:'Tue 5:20 PM'}],
+  2:[{a:'AR',t:'Who has the Itten color wheel readings? Left my copy at home 😭',ts:'Fri 3:45 PM'},{a:'BL',t:'I can share a PDF! Send me your email.',ts:'Fri 3:50 PM'}],
+  3:[{a:'HM',t:"Looking for one more person for next week's grid crit. Anyone?",ts:'Wed 4:30 PM'},{a:'JP',t:'I can join! My layout skills need serious work lol',ts:'Wed 4:35 PM'}],
+  4:[{a:'WS',t:'Got the MCP server running locally. Want to do a walkthrough Saturday?',ts:'Thu 11:02 AM'},{a:'NL',t:"Yes please!! I've been stuck on the auth flow for two days",ts:'Thu 11:10 AM'}],
+  5:[{a:'OC',t:'Anyone have good notes on Bauhaus for this week?',ts:'Sun 2:55 PM'},{a:'RP',t:'I have a solid summary — posting in the group folder.',ts:'Sun 3:00 PM'},{a:'SM',t:'Thank you!! The exam section on that is confusing me',ts:'Sun 3:04 PM'}]
+};
+let idGroups=[
+  {id:0,subject:'Human-AI Interaction',name:'Human-AI Interaction Lab',location:'Zoom (link sent after joining)',schedule:'Mon & Wed 7–9 PM, recurring',goal:'Weekly readings + concept review',format:'Virtual',members:['KJ','SL','MK','HP'],max:6,tags:['Virtual','Evenings','Readings']},
+  {id:1,subject:'Interaction Design',name:'Interaction Design Collective',location:'Veritas B Hall 302',schedule:'Tue & Thu 6–8 PM, recurring',goal:'Critique sessions + project feedback',format:'In-person',members:['YC','JL','PK'],max:6,tags:['In-person','Evenings','Crit sessions']},
+  {id:2,subject:'Color Design',name:'Color Theory Squad',location:'IID Studio, Veritas A 401',schedule:'Fri 4–6 PM',goal:'Assignment review + concept exploration',format:'In-person',members:['AR','BL','CK','DM','EJ'],max:6,tags:['In-person','Afternoons','Assignments']},
+  {id:3,subject:'Editorial Design',name:'Editorial & Type Club',location:'Café Underwood (lower campus)',schedule:'Wed 5–7 PM',goal:'Portfolio critique + layout reviews',format:'In-person',members:['HM','JP'],max:6,tags:['In-person','Evenings','Portfolio']},
+  {id:4,subject:'Tool Using AI Agents Using MCP Servers',name:'MCP Agents Study Crew',location:'Underwood Library 2F, Room B',schedule:'Sat 2–5 PM',goal:'Hands-on MCP builds + problem sets',format:'In-person',members:['WS','NL'],max:6,tags:['In-person','Weekend','Hands-on']},
+  {id:5,subject:'Design History',name:'Design History Reading Group',location:'Zoom',schedule:'Sun 3–5 PM',goal:'Chapter discussions + exam prep',format:'Virtual',members:['OC','RP','SM','TK'],max:6,tags:['Virtual','Weekend','Exam prep']}
+];
+let joinedGroups=new Set();
+let pendingGroups=new Set();
+let currentDetailGroup=null;
+let currentApplyGroup=null;
+let myPageTab='joined';
+let userFirstName='';
+
+/* PAGE / NAV */
+function showPage(p){
+  document.querySelectorAll('.page').forEach(el=>el.classList.remove('active'));
+  document.getElementById('page-'+p).classList.add('active');
+  window.scrollTo(0,0);
+  if(p==='mypage') renderMyPage();
+}
+function navScrollTo(id){
+  setTimeout(()=>{const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});},60);
+}
+
+/* RENDER BROWSE */
+function renderGroups(filter=''){
+  const grid=document.getElementById('groups-grid');
+  grid.innerHTML='';
+  const q=filter.toLowerCase();
+  idGroups
+    .filter(g=>!q||g.name.toLowerCase().includes(q)||g.subject.toLowerCase().includes(q)||g.tags.some(t=>t.toLowerCase().includes(q))||g.schedule.toLowerCase().includes(q))
+    .forEach(g=>{
+      const joined=joinedGroups.has(g.id);
+      const pending=pendingGroups.has(g.id);
+      const card=document.createElement('div');
+      card.className='group-card'+(joined?' joined':'');
+      card.id='gc-'+g.id;
+      let footerBtn='';
+      if(joined){
+        footerBtn=`<button class="join-btn joined-state" onclick="openChatModal(${g.id});event.stopPropagation()">💬 Open chat</button>`;
+      } else if(pending){
+        footerBtn=`<span class="pending-badge">⏳ Pending approval</span>`;
+      } else {
+        footerBtn=`<button class="btn-apply" onclick="openApplyModal(${g.id});event.stopPropagation()">Apply →</button>`;
+      }
+      card.innerHTML=`
+        <div class="joined-ribbon">Joined</div>
+        <div class="group-subject">${g.subject}</div>
+        <div class="group-name">${g.name}</div>
+        <div class="group-meta">${g.format==='Virtual'?'💻':'📍'} ${g.location}<br>🕐 ${g.schedule}</div>
+        <div class="group-tags">${g.tags.map(t=>`<span class="group-tag">${t}</span>`).join('')}</div>
+        <div class="group-footer">
+          <span class="member-count" id="mc-${g.id}">${g.members.length} / ${g.max} members</span>
+          ${footerBtn}
+        </div>`;
+      card.querySelector('.group-name').onclick=()=>openGroupModal(g.id);
+      grid.appendChild(card);
+    });
+}
+function filterGroups(){renderGroups(document.getElementById('search-input').value);}
+
+/* APPLY MODAL */
+function openApplyModal(id){
+  const g=idGroups.find(x=>x.id===id);if(!g)return;
+  currentApplyGroup=g;
+  document.getElementById('apply-subject').textContent=g.subject;
+  document.getElementById('apply-group-name').textContent=g.name+' · '+g.format;
+  document.getElementById('apply-reason').value='';
+  document.getElementById('apply-contribute').value='';
+  document.getElementById('apply-avail').value='';
+  openOverlay('apply-overlay');
+}
+function submitApply(){
+  if(!currentApplyGroup)return;
+  const id=currentApplyGroup.id;
+  pendingGroups.add(id);
+  closeModal('apply-overlay');
+  renderGroups(document.getElementById('search-input').value);
+  showToast('Application sent! Waiting for the group leader to admit you.');
+  // Simulate leader approval after 4 seconds
+  setTimeout(()=>admitUser(id),4000);
+}
+function admitUser(id){
+  pendingGroups.delete(id);
+  joinedGroups.add(id);
+  const g=idGroups.find(x=>x.id===id);
+  if(g&&!g.members.includes('You')) g.members.push('You');
+
+  // 1. Re-render browse grid (pending badge -> open chat)
+  renderGroups(document.getElementById('search-input').value);
+
+  // 2. Update step-4 match list button if present
+  syncMatchBtn(id);
+
+  // 3. If the detail modal for THIS group is open, refresh its CTA live
+  if(currentDetailGroup&&currentDetailGroup.id===id){
+    const btn=document.getElementById('m-join-btn');
+    if(btn){
+      btn.textContent='💬 Open group chat';
+      btn.style.background='#2D7A4A';btn.style.color='white';
+      btn.disabled=false;btn.style.opacity='1';btn.style.cursor='pointer';
+      btn.onclick=function(){closeModal('modal-overlay');openChatModal(id);};
+    }
+    if(g){
+      document.getElementById('m-hosted').textContent=g.members.length+' of '+g.max+' spots filled · '+g.format;
+      document.getElementById('m-members').innerHTML=g.members.map(function(m,i){return '<div class="m-avatar" style="background:'+AC[i%AC.length]+'">'+m+'</div>';}).join('');
+      document.getElementById('m-spots').textContent=(g.max-g.members.length)+' spot'+(g.max-g.members.length!==1?'s':'')+' remaining';
+    }
+  }
+
+  // 4. If My Page is currently visible, re-render it
+  if(document.getElementById('page-mypage').classList.contains('active')){
+    renderMyPage();
+  }
+
+  showToast('🎉 You\'ve been admitted to '+(g?g.name:'the group')+'!');
+}
+
+/* TOAST */
+function showToast(msg){
+  let t=document.getElementById('_toast');
+  if(!t){t=document.createElement('div');t.id='_toast';t.style.cssText='position:fixed;bottom:32px;left:50%;transform:translateX(-50%);background:#0A0A0A;color:white;padding:12px 24px;border-radius:50px;font-size:14px;font-weight:500;z-index:9999;box-shadow:0 8px 32px rgba(0,0,0,.2);transition:opacity .3s;pointer-events:none';document.body.appendChild(t);}
+  t.textContent=msg;t.style.opacity='1';
+  clearTimeout(t._t);t._t=setTimeout(()=>{t.style.opacity='0';},3500);
+}
+
+/* MY PAGE */
+function switchMyTab(tab){
+  myPageTab=tab;
+  document.getElementById('tab-joined').classList.toggle('active',tab==='joined');
+  document.getElementById('tab-pending').classList.toggle('active',tab==='pending');
+  const sw=document.getElementById('my-search-wrap');
+  if(sw) sw.style.display=tab==='joined'?'':'none';
+  renderMyPage();
+}
+function renderMyPage(){
+  const name=document.getElementById('fn')?.value.trim()||'';
+  const email=document.getElementById('em')?.value.trim()||'';
+  if(name){
+    userFirstName=name.split(' ')[0];
+    document.getElementById('my-name-display').textContent=name;
+    document.getElementById('my-avatar-initials').textContent=name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+    if(email) document.getElementById('my-email-display').textContent=email+' · IID';
+  }
+  const joined=[...joinedGroups].map(id=>idGroups.find(g=>g.id===id)).filter(Boolean);
+  const pending=[...pendingGroups].map(id=>idGroups.find(g=>g.id===id)).filter(Boolean);
+  document.getElementById('stat-joined').textContent=joined.length;
+  document.getElementById('stat-pending').textContent=pending.length;
+  const allMembers=new Set(joined.flatMap(g=>g.members));
+  document.getElementById('stat-members').textContent=allMembers.size;
+  const courses=new Set(joined.map(g=>g.subject));
+  document.getElementById('stat-courses').textContent=courses.size;
+  const list=document.getElementById('my-groups-list');
+  list.innerHTML='';
+
+  if(myPageTab==='pending'){
+    if(pending.length===0){
+      list.innerHTML='<div class="my-empty"><div class="my-empty-icon">✅</div><div class="my-empty-text">No pending applications.</div></div>';
+    } else {
+      const wrap=document.createElement('div');wrap.className='pending-list';
+      pending.forEach(g=>{
+        const row=document.createElement('div');row.className='pending-row';
+        row.innerHTML=`<div class="pending-icon">${GROUP_EMOJIS[g.id%GROUP_EMOJIS.length]}</div><div class="pending-info"><div class="pending-name">${g.name}</div><div class="pending-sub">${g.subject} · Application sent</div></div><span class="pending-tag">⏳ Awaiting leader</span>`;
+        wrap.appendChild(row);
+      });
+      list.appendChild(wrap);
+    }
+    return;
+  }
+
+  // Joined tab
+  const q=(document.getElementById('my-search')?.value||'').toLowerCase();
+  const filtered=joined.filter(g=>!q||g.name.toLowerCase().includes(q)||g.subject.toLowerCase().includes(q));
+  if(filtered.length===0){
+    list.innerHTML=`<div class="my-empty"><div class="my-empty-icon">${joined.length===0?'📭':'🔍'}</div><div class="my-empty-text">${joined.length===0?'No groups joined yet — apply to one!':'No groups match your search.'}</div></div>`;
+    return;
+  }
+  filtered.forEach((g,i)=>{
+    const row=document.createElement('div');row.className='my-group-row';
+    row.innerHTML=`
+      <div class="my-group-icon" style="background:${AC[g.id%AC.length]}22">${GROUP_EMOJIS[g.id%GROUP_EMOJIS.length]}</div>
+      <div class="my-group-info">
+        <div class="my-group-name">${g.name}</div>
+        <div class="my-group-sub">${g.subject} · ${g.members.length}/${g.max} members · ${g.format}</div>
+      </div>
+      <div class="my-group-right">
+        ${i===0?'<span class="my-unread">2 new</span>':''}
+        <button class="my-open-chat-btn" onclick="openChatModal(${g.id});event.stopPropagation()">💬 Chat</button>
+      </div>`;
+    row.onclick=()=>openGroupModal(g.id);
+    list.appendChild(row);
+  });
+}
+
+/* GROUP DETAIL MODAL */
+function openGroupModal(id){
+  const g=idGroups.find(x=>x.id===id);if(!g)return;
+  currentDetailGroup=g;
+  document.getElementById('m-subject').textContent=g.subject;
+  document.getElementById('m-title').textContent=g.name;
+  document.getElementById('m-hosted').textContent=`${g.members.length} of ${g.max} spots filled · ${g.format}`;
+  document.getElementById('m-location').textContent=g.location;
+  document.getElementById('m-schedule').textContent=g.schedule;
+  document.getElementById('m-goal').textContent=g.goal;
+  document.getElementById('m-members').innerHTML=g.members.map((m,i)=>`<div class="m-avatar" style="background:${AC[i%AC.length]}">${m}</div>`).join('');
+  document.getElementById('m-spots').textContent=`${g.max-g.members.length} spot${g.max-g.members.length!==1?'s':''} remaining`;
+  const btn=document.getElementById('m-join-btn');
+  btn.style.background='';btn.style.color='';btn.style.opacity='1';btn.style.cursor='pointer';btn.disabled=false;
+  if(joinedGroups.has(g.id)){
+    btn.textContent='💬 Open group chat';btn.style.background='#2D7A4A';
+    btn.onclick=()=>{closeModal('modal-overlay');openChatModal(g.id);};
+  } else if(pendingGroups.has(g.id)){
+    btn.textContent='⏳ Application pending…';btn.style.background='#F0C040';btn.style.color='#6B4C00';btn.disabled=true;btn.onclick=null;
+  } else {
+    btn.textContent='Apply to join';
+    btn.onclick=()=>{closeModal('modal-overlay');openApplyModal(g.id);};
+  }
+  openOverlay('modal-overlay');
+}
+
+/* CHAT — only for joined members */
+function openChatModal(id){
+  if(!joinedGroups.has(id)){showToast('You need to join the group first to access the chat.');return;}
+  const g=idGroups.find(x=>x.id===id);if(!g)return;
+  document.getElementById('chat-group-name').textContent=g.name;
+  document.getElementById('chat-group-sub').textContent=g.subject+' · '+g.members.length+' members';
+  document.getElementById('chat-members-bar').innerHTML=g.members.map((m,i)=>`<div class="chat-member-dot" style="background:${AC[i%AC.length]}">${m}</div>`).join('');
+  const msgs=document.getElementById('chat-messages');
+  msgs.innerHTML='';
+  (MSGS[id]||[]).forEach(m=>{
+    const div=document.createElement('div');div.className='chat-msg';
+    const ci=g.members.indexOf(m.a);
+    div.innerHTML=`<div class="chat-avatar" style="background:${AC[Math.max(ci,0)%AC.length]}">${m.a}</div><div><div class="chat-bubble">${m.t}</div><div class="chat-meta">${m.ts}</div></div>`;
+    msgs.appendChild(div);
+  });
+  msgs.scrollTop=msgs.scrollHeight;
+  openOverlay('chat-overlay');
+  const ta=document.getElementById('chat-textarea');
+  ta.value='';ta.style.height='auto';
+}
+function autoResizeChat(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,120)+'px';}
+function chatKeydown(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendChat();}}
+function sendChat(){
+  const ta=document.getElementById('chat-textarea');
+  const val=ta.value.trim();if(!val)return;
+  const msgs=document.getElementById('chat-messages');
+  const div=document.createElement('div');div.className='chat-msg me';
+  const ts=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+  div.innerHTML=`<div class="chat-avatar" style="background:#4169E1">Me</div><div><div class="chat-bubble">${val.replace(/\n/g,'<br>')}</div><div class="chat-meta">${ts}</div></div>`;
+  msgs.appendChild(div);msgs.scrollTop=msgs.scrollHeight;
+  ta.value='';ta.style.height='auto';
+}
+
+/* MATCH LIST (step 4) */
+function joinFromMatch(id,btn){
+  if(joinedGroups.has(id)){openChatModal(id);return;}
+  if(pendingGroups.has(id)){showToast('Application already sent.');return;}
+  pendingGroups.add(id);
+  btn.textContent='⏳ Applied';btn.style.background='#F0C040';btn.style.color='#6B4C00';btn.disabled=true;
+  renderGroups(document.getElementById('search-input').value);
+  setTimeout(()=>admitUser(id),4000);
+}
+function syncMatchBtn(id){
+  const mb=document.getElementById('mj-'+id);
+  if(mb){
+    mb.textContent='💬 Open chat';
+    mb.className='btn-join-match joined';
+    mb.style.background='#2D7A4A';
+    mb.style.color='white';
+    mb.disabled=false;
+    mb.onclick=function(){openChatModal(id);};
+  }
+}
+
+/* NEW GROUP */
+function openNewGroupModal(){openOverlay('ng-overlay');}
+function createGroup(){
+  const name=document.getElementById('ng-name').value.trim();
+  const course=document.getElementById('ng-course').value;
+  const format=document.getElementById('ng-format').value;
+  const max=parseInt(document.getElementById('ng-max').value);
+  const place=document.getElementById('ng-place').value.trim();
+  const selCells=[...document.querySelectorAll('#ng-time-grid .time-cell.sel')];
+  const days=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  const daySet=new Set(selCells.map(c=>days[parseInt(c.dataset.d)]));
+  const times=selCells.map(c=>c.dataset.t).sort();
+  const schedLabel=daySet.size>0?[...daySet].join(' & ')+' '+times[0]+'–'+times[times.length-1]:'TBD';
+  const selGoals=[...document.querySelectorAll('#ng-goal-pills .tag-pill.sel')].map(p=>p.textContent);
+  const customGoal=document.getElementById('ng-custom-goal').value.trim();
+  const goalStr=selGoals.length>0?selGoals.join(', ')+(customGoal?' + '+customGoal:''):(customGoal||'Study together');
+  if(!name||!course){showToast('Please fill in a group name and course.');return;}
+  const newId=idGroups.length;
+  idGroups.push({id:newId,subject:course,name,location:place||'TBD',schedule:schedLabel,goal:goalStr,format,members:['You'],max,tags:[format,'New group']});
+  MSGS[newId]=[{a:'You',t:'Welcome everyone! Looking forward to studying together 🎉',ts:'Just now'}];
+  joinedGroups.add(newId);
+  closeModal('ng-overlay');
+  renderGroups(document.getElementById('search-input').value);
+  showToast("Group created! You're the leader 🎉");
+}
+
+/* MODAL HELPERS */
+function openOverlay(id){document.getElementById(id).classList.add('open');document.body.style.overflow='hidden';}
+function closeModal(id){document.getElementById(id).classList.remove('open');document.body.style.overflow='';}
+function closeModalOutside(e,id){if(e.target===document.getElementById(id))closeModal(id);}
+
+/* FORM */
+function goStep(n){
+  [1,2,3,4].forEach(i=>{
+    document.getElementById('fs'+i).classList.toggle('active',i===n);
+    document.getElementById('sd'+i).className='step-dot'+(i===n?' active':(i<n?' done':''));
+  });
+  document.getElementById('register').scrollIntoView({behavior:'smooth',block:'start'});
+}
+function submitForm(){
+  const name=document.getElementById('fn').value.trim();
+  userFirstName=name?name.split(' ')[0]:'friend';
+  document.getElementById('user-name-display').textContent=userFirstName;
+  [1,2,3,4].forEach(i=>{document.getElementById('fs'+i).classList.toggle('active',i===4);document.getElementById('sd'+i).className='step-dot'+(i===4?' active':'done');});
+  document.getElementById('register').scrollIntoView({behavior:'smooth',block:'start'});
+}
+function updateDept(){const d=document.getElementById('sel-dept');d.disabled=!document.getElementById('sel-college').value;d.value='';document.getElementById('sel-course').disabled=true;document.getElementById('sel-course').value='';}
+function updateCourse(){const c=document.getElementById('sel-course');c.disabled=!document.getElementById('sel-dept').value;c.value='';}
+function addCourseTag(){
+  const sel=document.getElementById('sel-course');const val=sel.value;if(!val)return;
+  const wrap=document.getElementById('selected-courses');
+  if([...wrap.querySelectorAll('[data-val]')].some(t=>t.dataset.val===val)){sel.value='';return;}
+  const pill=document.createElement('div');pill.className='tag-pill sel';pill.dataset.val=val;
+  pill.textContent=val+' ✕';pill.onclick=()=>pill.remove();wrap.appendChild(pill);sel.value='';
+}
+function addManualCourse(){
+  const inp=document.getElementById('manual-course');const val=inp.value.trim();if(!val)return;
+  const wrap=document.getElementById('selected-courses');
+  const pill=document.createElement('div');pill.className='tag-pill sel';pill.dataset.val=val;
+  pill.textContent=val+' ✕';pill.onclick=()=>pill.remove();wrap.appendChild(pill);inp.value='';
+}
+document.getElementById('manual-course').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();addManualCourse();}});
+function toggleTag(el){el.classList.toggle('sel');}
+function pickOne(el){el.closest('.tags-wrap').querySelectorAll('.tag-pill').forEach(t=>t.classList.remove('sel'));el.classList.add('sel');}
+function toggleFaq(el){const o=el.classList.contains('open');document.querySelectorAll('.faq-item').forEach(f=>f.classList.remove('open'));if(!o)el.classList.add('open');}
+
+/* TIME GRIDS */
+function buildTimeGrid(bodyId){
+  const times=[];for(let h=8;h<=22;h++)times.push(h+':00');
+  const body=document.getElementById(bodyId);if(!body)return;
+  let drag=false,dv=false;
+  times.forEach(t=>{
+    const row=document.createElement('div');row.className='schedule-row';
+    const lbl=document.createElement('div');lbl.className='time-label';lbl.textContent=t;row.appendChild(lbl);
+    for(let d=0;d<7;d++){
+      const cell=document.createElement('div');cell.className='time-cell';
+      cell.dataset.t=t;cell.dataset.d=d;
+      cell.addEventListener('mousedown',e=>{e.preventDefault();drag=true;dv=!cell.classList.contains('sel');cell.classList.toggle('sel',dv);});
+      cell.addEventListener('mouseenter',()=>{if(drag)cell.classList.toggle('sel',dv);});
+      row.appendChild(cell);
+    }
+    body.appendChild(row);
+  });
+  document.addEventListener('mouseup',()=>{drag=false;});
+}
+buildTimeGrid('time-grid');
+buildTimeGrid('ng-time-grid');
+renderGroups();
+</script>
+</body>
+</html>
